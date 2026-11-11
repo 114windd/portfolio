@@ -1,3 +1,4 @@
+import { NightBackdrop } from "@/components/scene/backdrop";
 import { About } from "@/components/site/about";
 import { Contact } from "@/components/site/contact";
 import { Experience } from "@/components/site/experience";
@@ -15,10 +16,13 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <About />
-        <Stats stats={stats} />
-        <Experience roles={experience} earlier={earlier} />
-        <Work projects={projects} />
+        <div className="relative isolate">
+          <NightBackdrop />
+          <About />
+          <Stats stats={stats} />
+          <Experience roles={experience} earlier={earlier} />
+          <Work projects={projects} />
+        </div>
         <Contact />
       </main>
     </>

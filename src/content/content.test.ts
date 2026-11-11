@@ -110,4 +110,11 @@ describe("experience and profile", () => {
       "I'm looking for growth internships at consumer and crypto apps. Message me on LinkedIn, X or email and I'll get back to you.",
     );
   });
+
+  it("only highlights phrases that appear word for word in the about text", () => {
+    expect(profile.aboutHighlights).toEqual(["grow an audience", "44K+ followers and 80M+ views"]);
+    for (const phrase of profile.aboutHighlights) {
+      expect(profile.about).toContain(phrase);
+    }
+  });
 });

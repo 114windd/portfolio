@@ -1,23 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import { Cursor } from "@/components/motion/cursor";
+import { Caveat, Fraunces, Nunito } from "next/font/google";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { SceneDefs } from "@/components/scene/scene-defs";
 import { profile } from "@/content/profile";
 import { cn } from "@/lib/utils";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({ subsets: ["latin"], variable: "--font-display", display: "swap" });
-const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
-const serif = Instrument_Serif({
+const display = Fraunces({
   subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-instrument",
+  axes: ["SOFT", "WONK", "opsz"],
+  variable: "--font-fraunces",
   display: "swap",
 });
+const sans = Nunito({ subsets: ["latin"], variable: "--font-nunito", display: "swap" });
+const hand = Caveat({ subsets: ["latin"], variable: "--font-caveat", display: "swap" });
 
 const description =
   "Korede Odubanjo: software engineer at BNB Chain, previously Pudgy Penguins, who also grows audiences (80M+ views from one short-form campaign). GTM tools, crypto systems and growth work.";
@@ -41,14 +39,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07050b",
+  themeColor: "#0d0a22",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={cn("dark", display.variable, sans.variable, mono.variable, serif.variable)}>
+    <html lang="en" className={cn("dark", display.variable, sans.variable, hand.variable)}>
       <body className="min-h-svh overflow-x-clip">
+        <SceneDefs />
         {/* Motion renders reveals at opacity 0 and only animates them in with JavaScript. */}
         <noscript
           dangerouslySetInnerHTML={{
@@ -57,17 +56,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
         <a
           href="#work"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-full focus:bg-cream focus:px-4 focus:py-2 focus:font-bold focus:text-night"
         >
           Skip to work
         </a>
         <MotionProvider>
-          <SmoothScroll>
-            {children}
-            <Cursor />
-          </SmoothScroll>
+          <SmoothScroll>{children}</SmoothScroll>
         </MotionProvider>
-        <div aria-hidden className="grain pointer-events-none fixed inset-0 z-[90] opacity-[0.06] mix-blend-overlay" />
+        <div aria-hidden className="paper pointer-events-none fixed inset-0 z-[90] opacity-20" />
       </body>
     </html>
   );

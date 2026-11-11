@@ -1,95 +1,85 @@
-"use client";
-
-import { m, useScroll, useTransform, type MotionValue } from "motion/react";
 import Image from "next/image";
-import { useRef } from "react";
-import { socialIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { profile } from "@/content/profile";
-import { externalLinkProps } from "@/lib/external-link";
-import { usePrefersReducedMotion } from "@/hooks/use-media-query";
+import { SocialLinks } from "./social-links";
 
-function Word({ children, progress, range }: { children: string; progress: MotionValue<number>; range: [number, number] }) {
-  const opacity = useTransform(progress, range, [0.14, 1]);
-  const highlight = /\d/.test(children);
-  return (
-    <span className="relative mr-[0.25em] inline-block">
-      <m.span style={{ opacity }} className={highlight ? "text-violet-300" : undefined}>
-        {children}
-      </m.span>
-    </span>
+type Vars = React.CSSProperties & Record<`--${string}`, string | number>;
+
+const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+function withHighlights(text: string, phrases: readonly string[]) {
+  const pattern = new RegExp(`(${phrases.map(escape).join("|")})`);
+  return text.split(pattern).map((part, i) =>
+    phrases.includes(part) ? (
+      <span
+        key={i}
+        className="underline decoration-lavender decoration-wavy decoration-2 underline-offset-[0.24em] [text-decoration-skip-ink:none]"
+      >
+        {part}
+      </span>
+    ) : (
+      part
+    ),
   );
 }
 
 export function About() {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const reduce = usePrefersReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
-  const words = profile.about.split(" ");
-
   return (
-    <section id="about" className="relative mx-auto max-w-[90rem] px-5 py-28 sm:px-8 sm:py-40">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-4">
-          <div className="group relative mx-auto max-w-xs lg:sticky lg:top-28 lg:mx-0">
-            <div className="absolute -inset-6 rounded-[2.5rem] bg-violet-600/25 blur-3xl transition-opacity duration-700 group-hover:opacity-80" />
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-ink-2 p-3">
-              <div className="relative aspect-square overflow-hidden rounded-[1.5rem]">
-                <Image
-                  src={profile.photo.src}
-                  alt={profile.photo.alt}
-                  fill
-                  sizes="(min-width: 1024px) 320px, 80vw"
-                  className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [image-rendering:pixelated] group-hover:scale-105"
-                />
-              </div>
-              <div className="flex items-center justify-between gap-3 px-2 pt-4 pb-1">
-                <div>
-                  <p className="font-display text-lg font-semibold tracking-tight">{profile.name}</p>
-                  <p className="text-sm text-muted-foreground">{profile.role} · Growth</p>
-                </div>
-                <div className="flex gap-1.5">
-                  {profile.socials.map((social) => {
-                    const Icon = socialIcon(social.label);
-                    return (
-                      <a
-                        key={social.href}
-                        href={social.href}
-                        {...externalLinkProps(social.href)}
-                        aria-label={social.ariaLabel}
-                        className="grid size-9 place-items-center rounded-full border border-white/10 transition-colors hover:border-violet-400 hover:bg-violet-500/20"
-                      >
-                        <Icon className="size-3.5" />
-                      </a>
-                    );
-                  })}
+    <section id="about" aria-labelledby="about-title" className="relative mx-auto max-w-6xl px-5 py-28 sm:px-8 sm:py-36">
+      <div className="grid items-center gap-16 lg:grid-cols-12">
+        <Reveal className="lg:col-span-5">
+          <figure className="relative mx-auto w-[min(72vw,320px)]">
+            <div className="bob" style={{ "--t": "7s", "--bob": "-12px" } as Vars}>
+              <div className="relative aspect-square rounded-full bg-story-2 p-3 ring-1 ring-cream/15">
+                <div className="relative size-full overflow-hidden rounded-full ring-4 ring-night">
+                  <Image
+                    src={profile.photo.src}
+                    alt={profile.photo.alt}
+                    fill
+                    sizes="(min-width: 1024px) 320px, 72vw"
+                    className="object-cover [image-rendering:pixelated]"
+                  />
                 </div>
               </div>
             </div>
-          </div>
+            <span aria-hidden className="absolute -top-9 -left-2 -rotate-12 font-hand text-3xl text-lantern sm:-left-12">
+              that&apos;s me!
+            </span>
+            <svg
+              aria-hidden
+              viewBox="0 0 60 60"
+              className="absolute -top-1 left-12 size-14 text-cream/70 sm:left-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M6 8c14 2 26 12 30 30" />
+              <path d="M27 33l9 7 4-11" />
+            </svg>
+            <span aria-hidden className="twinkle absolute top-[12%] -right-3 size-2 rounded-full bg-moon" style={{ "--t": "3.4s" } as Vars} />
+            <span aria-hidden className="twinkle absolute -right-7 bottom-[30%] size-1.5 rounded-full bg-moon" style={{ "--t": "4.6s", "--d": "-2s" } as Vars} />
+            <span aria-hidden className="twinkle absolute bottom-[8%] -left-5 size-1.5 rounded-full bg-lantern" style={{ "--t": "5.2s", "--d": "-1s" } as Vars} />
+            <figcaption className="mt-8 flex flex-col items-center gap-4 text-center">
+              <span>
+                <span className="block font-display text-2xl font-semibold">{profile.name}</span>
+                <span className="block text-mist">{profile.role} · Growth</span>
+              </span>
+              <SocialLinks />
+            </figcaption>
+          </figure>
         </Reveal>
 
-        <div className="lg:col-span-8">
-          <p className="mb-8 font-mono text-[11px] tracking-[0.22em] text-violet-300 uppercase">(About)</p>
-          <p
-            ref={ref}
-            className="font-display text-[clamp(1.75rem,3.6vw,3.4rem)] leading-[1.12] font-semibold tracking-[-0.03em] text-balance"
-          >
-            {reduce ? (
-              profile.about
-            ) : (
-              <>
-                <span className="sr-only">{profile.about}</span>
-                <span aria-hidden>
-                  {words.map((word, i) => (
-                    <Word key={`${word}-${i}`} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>
-                      {word}
-                    </Word>
-                  ))}
-                </span>
-              </>
-            )}
-          </p>
+        <div className="lg:col-span-7">
+          <h2 id="about-title" className="font-hand text-3xl text-lavender sm:text-4xl">
+            a little about me
+          </h2>
+          <Reveal delay={0.1}>
+            <p className="mt-5 font-display text-[clamp(1.55rem,2.9vw,2.45rem)] leading-[1.32] font-medium text-pretty text-cream">
+              {withHighlights(profile.about, profile.aboutHighlights)}
+            </p>
+          </Reveal>
         </div>
       </div>
     </section>

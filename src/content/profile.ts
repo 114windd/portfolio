@@ -25,6 +25,8 @@ export const profile = {
   ],
   about:
     "I'm a software engineer who knows how to grow an audience. I build production systems on Solana, Ethereum and BNB Chain, and I've run short-form content for creators: one six-month campaign added 44K+ followers and 80M+ views. I own complex projects end to end, learn unfamiliar technologies fast and ship working solutions in fast-moving teams.",
+  /** Underlined in the About text; each must appear in `about` exactly. */
+  aboutHighlights: ["grow an audience", "44K+ followers and 80M+ views"],
   photo: { src: "/images/korede.webp", alt: "Korede Odubanjo's profile picture" },
   contactNote:
     "I'm looking for growth internships at consumer and crypto apps. Message me on LinkedIn, X or email and I'll get back to you.",

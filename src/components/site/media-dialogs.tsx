@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 import type { ProjectDemo, ProjectImage } from "@/lib/projects";
 
 const contentClass =
-  "max-w-[calc(100%-1.5rem)] gap-0 overflow-hidden rounded-2xl border border-white/10 bg-ink p-0 ring-0 sm:max-w-6xl";
+  "max-w-[calc(100%-1.5rem)] gap-0 overflow-hidden rounded-[1.75rem] border border-cream/10 bg-story p-0 ring-0 sm:max-w-6xl";
 
 /** The <video> only mounts once the dialog opens, so nothing downloads until then. */
 export function DemoDialog({
@@ -25,15 +25,15 @@ export function DemoDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className={contentClass} data-lenis-prevent>
-        <div className="flex items-start justify-between gap-6 border-b border-white/10 px-5 py-4 pr-14">
+        <div className="flex items-start justify-between gap-6 border-b border-cream/10 px-6 py-4 pr-16">
           <div>
-            <DialogTitle className="font-display text-lg font-semibold tracking-tight">{projectName} demo</DialogTitle>
-            <DialogDescription className="mt-1 max-w-3xl text-sm text-muted-foreground">{demo.title}</DialogDescription>
+            <DialogTitle className="font-display text-xl font-semibold">{projectName} demo</DialogTitle>
+            <DialogDescription className="mt-1 max-w-3xl text-sm text-mist">{demo.title}</DialogDescription>
           </div>
         </div>
-        <div className="bg-black">
+        <div className="bg-[#07061a]">
           <video
-            className="aspect-[16/10] max-h-[78svh] w-full bg-black object-contain"
+            className="aspect-[16/10] max-h-[78svh] w-full bg-[#07061a] object-contain"
             controls
             autoPlay
             playsInline
@@ -82,14 +82,14 @@ export function GalleryDialog({
   return (
     <Dialog open={open} onOpenChange={(value) => !value && onIndexChange(null)}>
       <DialogContent className={contentClass} data-lenis-prevent>
-        <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 pr-14">
-          <DialogTitle className="font-display text-lg font-semibold tracking-tight">{projectName}</DialogTitle>
-          <span className="font-mono text-xs text-muted-foreground">
+        <div className="flex items-center justify-between gap-4 border-b border-cream/10 px-6 py-4 pr-16">
+          <DialogTitle className="font-display text-xl font-semibold">{projectName}</DialogTitle>
+          <span className="text-sm font-bold text-mist">
             {(index ?? 0) + 1} / {images.length}
           </span>
         </div>
         {current ? (
-          <div className="relative max-h-[78svh] overflow-y-auto bg-black">
+          <div className="relative max-h-[78svh] overflow-y-auto bg-[#07061a]">
             <Image
               key={current.src}
               src={current.src}
@@ -101,14 +101,14 @@ export function GalleryDialog({
             />
           </div>
         ) : null}
-        <div className="flex items-center justify-between gap-4 border-t border-white/10 px-5 py-3">
-          <DialogDescription className="text-sm text-muted-foreground">{current?.alt}</DialogDescription>
+        <div className="flex items-center justify-between gap-4 border-t border-cream/10 px-6 py-3">
+          <DialogDescription className="text-sm text-mist">{current?.alt}</DialogDescription>
           {images.length > 1 ? (
             <div className="flex shrink-0 gap-2">
               <button
                 type="button"
                 onClick={() => step(-1)}
-                className="grid size-9 place-items-center rounded-full border border-white/15 transition-colors hover:border-violet-400 hover:bg-violet-500/20"
+                className="springy grid size-10 place-items-center rounded-full bg-story-2 ring-1 ring-cream/15 hover:-translate-y-0.5 hover:bg-lavender-deep"
                 aria-label="Previous screenshot"
               >
                 <ChevronLeft className="size-4" />
@@ -116,7 +116,7 @@ export function GalleryDialog({
               <button
                 type="button"
                 onClick={() => step(1)}
-                className="grid size-9 place-items-center rounded-full border border-white/15 transition-colors hover:border-violet-400 hover:bg-violet-500/20"
+                className="springy grid size-10 place-items-center rounded-full bg-story-2 ring-1 ring-cream/15 hover:-translate-y-0.5 hover:bg-lavender-deep"
                 aria-label="Next screenshot"
               >
                 <ChevronRight className="size-4" />

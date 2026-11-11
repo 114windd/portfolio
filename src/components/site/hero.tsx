@@ -1,173 +1,116 @@
 "use client";
 
+import { ArrowDown } from "lucide-react";
 import { m, useScroll, useTransform } from "motion/react";
 import Image from "next/image";
 import { useRef } from "react";
-import { socialIcon } from "@/components/icons";
-import { Magnetic } from "@/components/motion/magnetic";
+import { HeroScene } from "@/components/scene/hero-scene";
 import { profile } from "@/content/profile";
-import { externalLinkProps } from "@/lib/external-link";
-import { cn } from "@/lib/utils";
+import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 import { RotatingWords } from "./rotating-words";
+import { SocialLinks } from "./social-links";
 
-function Letters({ word, offset = 0, className }: { word: string; offset?: number; className?: string }) {
-  return (
-    <>
-      {word.split("").map((char, i) => (
-        <span key={i} className={cn("hero-letter", className)} style={{ "--i": i + offset } as React.CSSProperties}>
-          {char}
-        </span>
-      ))}
-    </>
-  );
+type Vars = React.CSSProperties & Record<`--${string}`, string | number>;
+
+function Letters({ word, offset = 0 }: { word: string; offset?: number }) {
+  return word.split("").map((char, i) => (
+    <span key={i} className="hero-letter" style={{ "--i": i + offset, "--tilt": `${i % 2 ? 7 : -7}deg` } as Vars}>
+      {char}
+    </span>
+  ));
 }
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const reduce = usePrefersReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const lineA = useTransform(scrollYProgress, [0, 1], ["0%", "-14%"]);
-  const lineB = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const lift = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-  const spin = useTransform(scrollYProgress, [0, 1], [0, 90]);
-
-  const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
-    if (e.pointerType !== "mouse" || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    ref.current.style.setProperty("--mx", `${e.clientX - rect.left}px`);
-    ref.current.style.setProperty("--my", `${e.clientY - rect.top}px`);
-  };
+  const lift = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
 
   return (
     <section
       id="top"
       ref={ref}
-      onPointerMove={onPointerMove}
-      className="relative isolate min-h-svh overflow-hidden"
-      style={{ "--mx": "70%", "--my": "30%" } as React.CSSProperties}
+      className="relative isolate flex min-h-svh flex-col overflow-hidden"
+      style={{ "--scene-h": "clamp(260px, 46svh, 460px)" } as Vars}
     >
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="grid-lines absolute inset-0 [mask-image:radial-gradient(ellipse_at_50%_35%,black_20%,transparent_70%)]" />
-        <div className="aurora-a absolute -top-[20%] -left-[10%] size-[60vmax] rounded-full bg-[radial-gradient(circle,rgb(124_58_237/0.5),transparent_68%)]" />
-        <div className="aurora-b absolute top-[10%] -right-[15%] size-[55vmax] rounded-full bg-[radial-gradient(circle,rgb(168_85_247/0.36),transparent_66%)]" />
-        <div className="aurora-c absolute -bottom-[30%] left-[20%] size-[50vmax] rounded-full bg-[radial-gradient(circle,rgb(76_29_149/0.55),transparent_66%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(600px_circle_at_var(--mx)_var(--my),rgb(167_139_250/0.16),transparent_60%)]" />
-        {/* Glow drawn with gradients rather than a blurred box-shadow, which is costly to raster at this size. */}
-        <div className="hero-horizon absolute top-[78%] left-1/2 aspect-square w-[180vw] sm:w-[140vw]">
-          <div className="absolute -inset-[10%] rounded-full bg-[radial-gradient(closest-side,rgb(139_92_246/0.55)_83%,transparent_97%)]" />
-          <div className="absolute inset-0 rounded-full border-t border-violet-300/50 bg-ink bg-[radial-gradient(closest-side,transparent_88%,rgb(167_139_250/0.28))]" />
-        </div>
-      </div>
+      <HeroScene progress={scrollYProgress} />
 
       <m.div
-        className="relative mx-auto flex min-h-svh max-w-[90rem] flex-col justify-between px-5 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-10"
-        style={{ y: lift, opacity: fade }}
+        className="relative mx-auto w-full max-w-6xl px-5 pt-28 sm:px-8 sm:pt-36"
+        style={reduce ? undefined : { y: lift, opacity: fade }}
       >
-        <div className="hero-fade flex flex-wrap items-center justify-between gap-3" style={{ "--d": "200ms" } as React.CSSProperties}>
-          <p className="font-mono text-[11px] tracking-[0.22em] text-white/60 uppercase">
-            {profile.role} <span className="text-violet-300">/</span> Growth
-          </p>
-          <p className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-xs text-white/80 backdrop-blur">
-            <span className="relative flex size-2">
-              <span className="ping-soft absolute inline-flex size-full rounded-full bg-violet-400" />
-              <span className="relative inline-flex size-2 rounded-full bg-violet-400" />
-            </span>
-            {profile.availability}
-          </p>
-        </div>
+        <p
+          className="hero-fade inline-flex items-center gap-2.5 rounded-[1.1rem] bg-story px-4 py-1.5 text-sm font-semibold text-cream/90 ring-1 ring-cream/10 sm:rounded-full"
+          style={{ "--d": "100ms" } as Vars}
+        >
+          <span aria-hidden className="flicker size-2 shrink-0 rounded-full bg-lantern shadow-[0_0_10px_2px_rgb(255_199_115/0.55)]" />
+          {profile.availability}
+        </p>
 
-        <h1 className="my-10 font-display leading-[0.84] font-extrabold tracking-[-0.055em] select-none">
+        <p className="hero-fade mt-7 font-hand text-3xl text-lavender sm:text-4xl" style={{ "--d": "250ms" } as Vars}>
+          hello there, I&apos;m
+        </p>
+        <h1 className="mt-1 font-display text-[clamp(3.4rem,11vw,8.6rem)] leading-[0.95] font-semibold tracking-[-0.02em] text-cream select-none">
           <span className="sr-only">{profile.name}</span>
-          <m.span aria-hidden className="flex items-center gap-[0.08em] text-[17.5vw] lg:text-[min(14.5vw,15rem)]" style={{ x: lineA }}>
-            <span className="-mb-[0.1em] inline-block overflow-hidden pb-[0.1em] whitespace-nowrap">
+          <span aria-hidden className="flex items-center gap-x-[0.18em]">
+            <span className="whitespace-nowrap">
               <Letters word={profile.firstName} />
             </span>
-            <span className="hero-pop inline-block shrink-0" style={{ "--d": "650ms" } as React.CSSProperties}>
-              <m.span
-                className="relative block h-[0.7em] w-[1.15em] overflow-hidden rounded-full border border-white/20 shadow-[0_0_60px_-10px_rgb(139_92_246/0.9)]"
-                style={{ rotate: spin }}
-              >
-                <Image
-                  src={profile.photo.src}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 220px, 30vw"
-                  className="object-cover"
-                  preload
-                />
-              </m.span>
+            <span className="hero-pop inline-block shrink-0" style={{ "--d": "750ms" } as Vars}>
+              <span className="bob relative block size-[0.82em] rounded-full bg-story-2 p-[0.05em] ring-[0.04em] ring-cream/80" style={{ "--t": "5s", "--bob": "-0.06em", "--bob-tilt": "4deg" } as Vars}>
+                <span className="relative block size-full overflow-hidden rounded-full">
+                  <Image
+                    src={profile.photo.src}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 140px, 25vw"
+                    className="object-cover [image-rendering:pixelated]"
+                    preload
+                  />
+                </span>
+              </span>
             </span>
-          </m.span>
-          <m.span
-            aria-hidden
-            className="block text-right text-[17.5vw] lg:text-[min(14.5vw,15rem)]"
-            style={{ x: lineB }}
-          >
-            <span className="-mb-[0.14em] inline-block overflow-hidden pr-[0.04em] pb-[0.14em] whitespace-nowrap">
-              <Letters word={profile.lastName} offset={profile.firstName.length} className="text-gradient" />
-            </span>
-          </m.span>
+          </span>
+          <span aria-hidden className="block whitespace-nowrap">
+            <Letters word={profile.lastName} offset={profile.firstName.length} />
+          </span>
         </h1>
 
-        <div className="grid items-end gap-8 lg:grid-cols-12">
-          <div className="hero-fade lg:col-span-5" style={{ "--d": "900ms" } as React.CSSProperties}>
-            <p className="mb-3 font-mono text-[11px] tracking-[0.22em] text-violet-300 uppercase">(Intro)</p>
-            <p className="max-w-md text-base leading-relaxed text-pretty text-white/75 sm:text-lg">{profile.intro}</p>
-          </div>
-          <div
-            className="hero-fade flex flex-col gap-6 lg:col-span-7 lg:items-end"
-            style={{ "--d": "1050ms" } as React.CSSProperties}
+        <p className="hero-fade mt-6 max-w-xl text-lg leading-relaxed text-pretty text-mist sm:text-xl" style={{ "--d": "950ms" } as Vars}>
+          {profile.intro}
+        </p>
+        <p className="hero-fade mt-4 text-xl font-bold text-cream sm:text-2xl" style={{ "--d": "1050ms" } as Vars}>
+          I build{" "}
+          <span className="block font-hand text-[1.4em] leading-tight font-semibold text-lavender sm:inline">
+            <RotatingWords words={profile.rotating} />
+          </span>
+        </p>
+
+        <div className="hero-fade mt-8 flex flex-wrap items-center gap-3" style={{ "--d": "1200ms" } as Vars}>
+          <a
+            href="#work"
+            className="springy group inline-flex h-13 items-center gap-3 rounded-full bg-cream pr-2 pl-6 text-base font-extrabold text-night hover:-translate-y-1 hover:-rotate-2 hover:bg-moon"
           >
-            <p className="font-display text-2xl leading-tight font-semibold tracking-tight sm:text-3xl lg:text-right">
-              <span className="text-white/60">I build</span>
-              <span className="block font-serif text-[1.15em] font-normal tracking-normal text-violet-300 italic">
-                <RotatingWords words={profile.rotating} />
-              </span>
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Magnetic>
-                <a
-                  href="#work"
-                  data-cursor="View"
-                  className="group relative inline-flex h-12 items-center gap-3 overflow-hidden rounded-full bg-white pr-2 pl-6 text-sm font-medium text-ink"
-                >
-                  <span className="absolute inset-0 translate-y-full rounded-full bg-violet-600 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:translate-y-0" />
-                  <span className="relative transition-colors duration-500 group-hover:text-white">See my work</span>
-                  <span className="relative grid size-8 place-items-center rounded-full bg-ink text-white transition-transform duration-500 group-hover:rotate-90 group-hover:bg-white group-hover:text-ink">
-                    <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
-                      <path d="M8 2v12M3 9l5 5 5-5" />
-                    </svg>
-                  </span>
-                </a>
-              </Magnetic>
-              {profile.socials.map((social) => {
-                const Icon = socialIcon(social.label);
-                return (
-                  <Magnetic key={social.href}>
-                    <a
-                      href={social.href}
-                      {...externalLinkProps(social.href)}
-                      aria-label={social.ariaLabel}
-                      className="grid size-12 place-items-center rounded-full border border-white/15 bg-white/[0.04] backdrop-blur transition-colors duration-300 hover:border-violet-400 hover:bg-violet-500/20"
-                    >
-                      <Icon className="size-4" />
-                    </a>
-                  </Magnetic>
-                );
-              })}
-            </div>
-          </div>
+            See my work
+            <span className="springy grid size-9 place-items-center rounded-full bg-night text-cream group-hover:translate-y-0.5">
+              <ArrowDown className="size-4" />
+            </span>
+          </a>
+          <SocialLinks size="lg" />
         </div>
       </m.div>
 
+      <div aria-hidden className="min-h-[calc(var(--scene-h)*0.62)] flex-1" />
+
       <div
         aria-hidden
-        className="hero-fade pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 sm:flex"
-        style={{ "--d": "1400ms" } as React.CSSProperties}
+        className="hero-fade pointer-events-none absolute bottom-5 left-1/2 hidden -translate-x-1/2 flex-col items-center sm:flex"
+        style={{ "--d": "1700ms" } as Vars}
       >
-        <span className="font-mono text-[10px] tracking-[0.3em] text-white/50 uppercase">Scroll</span>
-        <span className="relative h-10 w-px overflow-hidden bg-white/10">
-          <span className="scroll-cue absolute inset-0 bg-violet-300" />
+        <span className="bob flex flex-col items-center font-hand text-xl text-cream/70" style={{ "--t": "3s", "--bob": "6px" } as Vars}>
+          come and see
+          <ArrowDown className="size-4" />
         </span>
       </div>
     </section>

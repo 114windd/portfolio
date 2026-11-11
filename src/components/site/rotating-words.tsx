@@ -12,11 +12,11 @@ export function RotatingWords({ words, interval = 2600 }: { words: readonly stri
   }, [words.length, interval]);
 
   return (
-    <span className="relative inline-grid overflow-hidden align-bottom">
+    <span className="relative inline-grid overflow-hidden pb-[0.08em] align-bottom">
       <span className="sr-only">{words.join(", ")}</span>
-      {/* Every phrase sits invisibly in the same cell, so the box is as wide as the longest one. */}
+      {/* Every phrase sits invisibly in the same cell, so the box is as big as the longest one. */}
       {words.map((word) => (
-        <span key={word} aria-hidden className="invisible col-start-1 row-start-1 whitespace-nowrap">
+        <span key={word} aria-hidden className="invisible col-start-1 row-start-1 sm:whitespace-nowrap">
           {word}
         </span>
       ))}
@@ -24,11 +24,11 @@ export function RotatingWords({ words, interval = 2600 }: { words: readonly stri
         <m.span
           key={words[index]}
           aria-hidden
-          className="col-start-1 row-start-1 whitespace-nowrap"
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: "0%", opacity: 1 }}
-          exit={{ y: "-100%", opacity: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="col-start-1 row-start-1 sm:whitespace-nowrap"
+          initial={{ y: "90%", opacity: 0, rotate: -4 }}
+          animate={{ y: "0%", opacity: 1, rotate: 0 }}
+          exit={{ y: "-80%", opacity: 0, rotate: 3 }}
+          transition={{ type: "spring", stiffness: 260, damping: 18 }}
         >
           {words[index]}
         </m.span>

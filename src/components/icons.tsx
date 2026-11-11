@@ -18,6 +18,15 @@ export function XIcon(props: IconProps) {
   );
 }
 
+export function MoonMark(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden {...props}>
+      <path d="M15.6 3.4a8.6 8.6 0 1 0 5.2 13A7 7 0 0 1 15.6 3.4Z" fill="#fbf3dc" />
+      <circle cx="19" cy="5.5" r="1.1" fill="#ffc773" />
+    </svg>
+  );
+}
+
 export function socialIcon(label: string) {
   if (label === "LinkedIn") return LinkedInIcon;
   if (label === "Email") return Mail;

@@ -3,13 +3,13 @@
 import { m } from "motion/react";
 import { cn } from "@/lib/utils";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const spring = { type: "spring", stiffness: 110, damping: 16, mass: 0.9 } as const;
 
 export function Reveal({
   children,
   className,
   delay = 0,
-  y = 28,
+  y = 34,
 }: {
   children: React.ReactNode;
   className?: string;
@@ -19,23 +19,23 @@ export function Reveal({
   return (
     <m.div
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-      transition={{ duration: 0.9, ease, delay }}
+      transition={{ ...spring, delay }}
     >
       {children}
     </m.div>
   );
 }
 
-/** Splits text into words that rise out of a mask one after another. */
+/** Splits text into words that bounce up one after another. */
 export function RevealText({
   text,
   className,
   wordClassName,
   delay = 0,
-  stagger = 0.06,
+  stagger = 0.07,
   as: Tag = "span",
   id,
 }: {
@@ -60,17 +60,17 @@ export function RevealText({
         transition={{ staggerChildren: stagger, delayChildren: delay }}
       >
         {words.map((word, i) => (
-          <span key={`${word}-${i}`} className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-bottom">
+          <span key={`${word}-${i}`}>
             <m.span
-              className={cn("inline-block will-change-transform", wordClassName)}
+              className={cn("inline-block origin-bottom will-change-transform", wordClassName)}
               variants={{
-                hidden: { y: "110%", rotate: 4 },
-                shown: { y: "0%", rotate: 0, transition: { duration: 0.9, ease } },
+                hidden: { opacity: 0, y: "0.5em", rotate: i % 2 ? 6 : -6, scale: 0.85 },
+                shown: { opacity: 1, y: "0em", rotate: 0, scale: 1, transition: { type: "spring", stiffness: 220, damping: 14 } },
               }}
             >
               {word}
             </m.span>
-            {i < words.length - 1 ? "\u00a0" : null}
+            {i < words.length - 1 ? " " : null}
           </span>
         ))}
       </m.span>

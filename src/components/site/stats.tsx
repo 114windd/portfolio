@@ -5,6 +5,19 @@ import { useEffect, useRef, useState } from "react";
 import { Reveal, RevealText } from "@/components/motion/reveal";
 import type { Stat } from "@/content/profile";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
+
+type Vars = React.CSSProperties & Record<`--${string}`, string | number>;
+
+const blobs = [
+  "58% 42% 55% 45% / 52% 48% 52% 48%",
+  "45% 55% 48% 52% / 56% 44% 56% 44%",
+  "52% 48% 40% 60% / 45% 55% 45% 55%",
+  "60% 40% 52% 48% / 50% 50% 50% 50%",
+  "47% 53% 58% 42% / 54% 46% 54% 46%",
+  "55% 45% 45% 55% / 48% 52% 48% 52%",
+];
+const fills = ["#5b47b5", "#241d5c", "#2d2268", "#1f2a5e", "#33256c", "#262062"];
 
 function Counter({ stat }: { stat: Stat }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -37,55 +50,60 @@ function Counter({ stat }: { stat: Stat }) {
   );
 }
 
-function StatCard({ stat, index }: { stat: Stat; index: number }) {
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--x", `${e.clientX - rect.left}px`);
-    e.currentTarget.style.setProperty("--y", `${e.clientY - rect.top}px`);
-  };
-
+function Bubble({ stat, index }: { stat: Stat; index: number }) {
+  const accent = index === 0;
   return (
-    <Reveal delay={(index % 3) * 0.08}>
+    <div className="bob" style={{ "--t": `${6 + (index % 3)}s`, "--d": `-${index * 0.9}s`, "--bob": "-10px" } as Vars}>
       <div
-        onPointerMove={onPointerMove}
-        className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-ink-2/80 p-6 transition-colors duration-500 hover:border-violet-400/40 sm:p-8"
+        className="springy grid size-60 place-items-center p-8 text-center ring-1 ring-cream/10 hover:scale-105 hover:-rotate-3 sm:size-[16.5rem]"
+        style={{
+          borderRadius: blobs[index % blobs.length],
+          background: `radial-gradient(circle at 32% 26%, rgb(255 255 255 / 0.1), transparent 46%), ${fills[index % fills.length]}`,
+        }}
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{ background: "radial-gradient(360px circle at var(--x) var(--y), rgb(139 92 246 / 0.18), transparent 60%)" }}
-        />
-        <p className="relative font-display text-[clamp(3rem,6vw,5.5rem)] leading-none font-extrabold tracking-[-0.05em]">
-          <span className="text-gradient">
+        <div>
+          <p className="font-display text-[3.1rem] leading-none font-semibold text-cream sm:text-[3.4rem]">
             <Counter stat={stat} />
-          </span>
-        </p>
-        <p className="relative mt-4 text-base font-medium text-white sm:text-lg">{stat.label}</p>
-        <p className="relative mt-1 text-sm leading-relaxed text-muted-foreground">{stat.context}</p>
+          </p>
+          <p className="mt-2 font-bold text-cream">{stat.label}</p>
+          <p className={cn("mt-1 text-[13px] leading-snug", accent ? "text-cream/90" : "text-mist")}>{stat.context}</p>
+        </div>
       </div>
-    </Reveal>
+    </div>
   );
 }
 
 export function Stats({ stats }: { stats: Stat[] }) {
   return (
-    <section aria-labelledby="numbers-title" className="relative mx-auto max-w-[90rem] px-5 pb-28 sm:px-8 sm:pb-40">
-      <div className="mb-10 flex flex-wrap items-end justify-between gap-4 sm:mb-14">
+    <section aria-labelledby="numbers-title" className="relative mx-auto max-w-6xl px-5 pb-28 sm:px-8 sm:pb-36">
+      <div className="mb-12 text-center sm:mb-16">
         <RevealText
           as="h2"
           id="numbers-title"
-          text="Growth, in numbers."
-          className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] font-bold tracking-[-0.045em]"
+          text="Growth in numbers"
+          className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[1] font-semibold"
         />
-        <p className="max-w-sm text-sm text-muted-foreground">
+        <p className="mx-auto mt-4 max-w-md text-mist">
           Results from short-form growth campaigns and production engineering work.
         </p>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mx-auto grid max-w-5xl sm:flex sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-6">
         {stats.map((stat, i) => (
-          <StatCard key={stat.label} stat={stat} index={i} />
+          <li
+            key={stat.label}
+            className={cn(
+              "flex max-sm:w-full",
+              i % 2 ? "max-sm:justify-end" : "max-sm:justify-start",
+              i > 0 && "max-sm:-mt-12",
+              i % 3 === 1 && "sm:translate-y-10",
+            )}
+          >
+            <Reveal delay={(i % 3) * 0.08}>
+              <Bubble stat={stat} index={i} />
+            </Reveal>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

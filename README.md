@@ -4,6 +4,8 @@ Personal site for Korede Odubanjo, a software engineer at BNB Chain who also gro
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4 and shadcn/ui. Motion drives the scroll and hover animations and Lenis handles smooth scrolling. Both turn off when the visitor prefers reduced motion. The page is fully static.
 
+The look is a painted night sky: stars, a moon, clouds lit from below, layered hills and a cottage with its window lit. It's all hand-drawn SVG and CSS in `src/components/scene/`, with no image assets. Stars and fireflies come from a seeded generator (`src/lib/scene.ts`), so the server and the browser draw the same sky. Fonts are Fraunces (headings), Nunito (body) and Caveat (handwritten notes), all from Google Fonts. Colours are CSS variables at the top of `src/app/globals.css`.
+
 ## Run it
 
 ```bash
@@ -19,7 +21,7 @@ pnpm build
 
 All copy lives in `src/content/`:
 
-- `profile.ts`: intro, about, stats and socials
+- `profile.ts`: intro, about (and the phrases underlined in it), stats and socials
 - `experience.ts`: roles and dates
 - `projects.ts`: the project cards
 - `links.ts`: every project URL in one place
@@ -31,7 +33,7 @@ Edit the value in `src/content/links.ts`. Only `https://` links are rendered, an
 
 ### Adding a link or demo to any card
 
-Each project in `projects.ts` takes optional `links.live`, `links.code`, `demo` and `screenshots`. A card shows only the buttons it has data for. Without a demo or screenshots it shows `keyFacts` or a "Demo coming soon" panel instead. `codePrivate` replaces the code button with a short note explaining why the code isn't shared.
+Each project in `projects.ts` takes optional `links.live`, `links.code`, `demo` and `screenshots`. A card shows only the buttons it has data for. Without a demo or screenshots it shows a "demo coming soon" panel instead, with the project's `keyFacts` if it has any. `codePrivate` replaces the code button with a short note explaining why the code isn't shared.
 
 `missingPieces()` in `src/lib/projects.ts` lists what a card still lacks.
 
