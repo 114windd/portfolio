@@ -47,11 +47,15 @@ export function Hero() {
     >
       <div aria-hidden className="absolute inset-0 -z-10">
         <div className="grid-lines absolute inset-0 [mask-image:radial-gradient(ellipse_at_50%_35%,black_20%,transparent_70%)]" />
-        <div className="aurora-a absolute -top-[20%] -left-[10%] size-[60vmax] rounded-full bg-[radial-gradient(circle,rgb(124_58_237/0.55),transparent_62%)] blur-3xl" />
-        <div className="aurora-b absolute top-[10%] -right-[15%] size-[55vmax] rounded-full bg-[radial-gradient(circle,rgb(168_85_247/0.4),transparent_60%)] blur-3xl" />
-        <div className="aurora-c absolute -bottom-[30%] left-[20%] size-[50vmax] rounded-full bg-[radial-gradient(circle,rgb(76_29_149/0.6),transparent_60%)] blur-3xl" />
+        <div className="aurora-a absolute -top-[20%] -left-[10%] size-[60vmax] rounded-full bg-[radial-gradient(circle,rgb(124_58_237/0.5),transparent_68%)]" />
+        <div className="aurora-b absolute top-[10%] -right-[15%] size-[55vmax] rounded-full bg-[radial-gradient(circle,rgb(168_85_247/0.36),transparent_66%)]" />
+        <div className="aurora-c absolute -bottom-[30%] left-[20%] size-[50vmax] rounded-full bg-[radial-gradient(circle,rgb(76_29_149/0.55),transparent_66%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(600px_circle_at_var(--mx)_var(--my),rgb(167_139_250/0.16),transparent_60%)]" />
-        <div className="hero-horizon absolute top-[78%] left-1/2 aspect-square w-[180vw] rounded-full border-t border-violet-300/50 bg-ink shadow-[0_-30px_120px_-20px_rgb(139_92_246/0.75),inset_0_40px_80px_-40px_rgb(167_139_250/0.45)] sm:w-[140vw]" />
+        {/* Glow drawn with gradients rather than a blurred box-shadow, which is costly to raster at this size. */}
+        <div className="hero-horizon absolute top-[78%] left-1/2 aspect-square w-[180vw] sm:w-[140vw]">
+          <div className="absolute -inset-[10%] rounded-full bg-[radial-gradient(closest-side,rgb(139_92_246/0.55)_83%,transparent_97%)]" />
+          <div className="absolute inset-0 rounded-full border-t border-violet-300/50 bg-ink bg-[radial-gradient(closest-side,transparent_88%,rgb(167_139_250/0.28))]" />
+        </div>
       </div>
 
       <m.div
