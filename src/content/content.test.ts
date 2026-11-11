@@ -45,7 +45,7 @@ describe("projects", () => {
     const radar = bySlug("competitor-review-radar");
     expect(radar.links).toEqual({
       live: "https://competitor-review-radar.vercel.app",
-      code: "https://github.com/koredeBNB/competitor-review-radar",
+      code: "https://github.com/114windd/competitor-review-radar",
     });
   });
 
@@ -54,7 +54,7 @@ describe("projects", () => {
     expect(kioku.name).toBe("Kioku");
     expect(kioku.links).toEqual({
       live: "https://kikou-kappa.vercel.app",
-      code: "https://github.com/koredeBNB/kikou",
+      code: "https://github.com/114windd/kikou",
     });
     expect(kioku.demo?.src).toBeTruthy();
   });

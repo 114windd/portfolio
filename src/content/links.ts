@@ -4,11 +4,11 @@
  */
 export const PROJECT_URLS: Record<string, string> = {
   creatorScoutLive: "https://creator-scout-chi.vercel.app",
-  creatorScoutCode: "https://github.com/koredeBNB/creator-scout",
+  creatorScoutCode: "https://github.com/114windd/creator-scout",
   reviewRadarLive: "https://competitor-review-radar.vercel.app",
-  reviewRadarCode: "https://github.com/koredeBNB/competitor-review-radar",
+  reviewRadarCode: "https://github.com/114windd/competitor-review-radar",
   kiokuLive: "https://kikou-kappa.vercel.app",
-  kiokuCode: "https://github.com/koredeBNB/kikou",
+  kiokuCode: "https://github.com/114windd/kikou",
   saffLive: "https://saff-khutbah.vercel.app",
 };
 
