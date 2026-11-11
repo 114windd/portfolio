@@ -53,7 +53,7 @@ describe("projects", () => {
     const kioku = bySlug("kioku");
     expect(kioku.name).toBe("Kioku");
     expect(kioku.links).toEqual({
-      live: "https://kikou-kappa.vercel.app",
+      live: "https://kioku.vercel.app",
       code: "https://github.com/koredeBNB/kikou",
     });
     expect(kioku.demo?.src).toBeTruthy();

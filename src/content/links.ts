@@ -7,7 +7,7 @@ export const PROJECT_URLS: Record<string, string> = {
   creatorScoutCode: "https://github.com/koredeBNB/creator-scout",
   reviewRadarLive: "https://competitor-review-radar.vercel.app",
   reviewRadarCode: "https://github.com/koredeBNB/competitor-review-radar",
-  kiokuLive: "https://kikou-kappa.vercel.app",
+  kiokuLive: "https://kioku.vercel.app",
   kiokuCode: "https://github.com/koredeBNB/kikou",
   saffLive: "https://saff-khutbah.vercel.app",
 };
