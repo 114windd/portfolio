@@ -5,8 +5,7 @@
 export const PROJECT_URLS: Record<string, string> = {
   creatorScoutLive: "https://creator-scout-chi.vercel.app",
   creatorScoutCode: "https://github.com/koredeBNB/creator-scout",
-  // Competitor Review Radar isn't deployed yet: paste its live URL here.
-  reviewRadarLive: "",
+  reviewRadarLive: "https://competitor-review-radar.vercel.app",
   reviewRadarCode: "https://github.com/koredeBNB/competitor-review-radar",
   kiokuLive: "https://kikou-kappa.vercel.app",
   kiokuCode: "https://github.com/koredeBNB/kikou",

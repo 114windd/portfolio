@@ -40,6 +40,15 @@ describe("projects", () => {
     expect(bySlug("competitor-review-radar").links.live).toBe(PROJECT_URLS.reviewRadarLive);
   });
 
+  it("presents Competitor Review Radar as live, with its live site and public repo", () => {
+    const radar = bySlug("competitor-review-radar");
+    expect(radar.status).toBe("live");
+    expect(radar.links).toEqual({
+      live: "https://competitor-review-radar.vercel.app",
+      code: "https://github.com/koredeBNB/competitor-review-radar",
+    });
+  });
+
   it("presents Kioku as shipped, with its live site and public repo", () => {
     const kioku = bySlug("kioku");
     expect(kioku.name).toBe("Kioku");

@@ -24,15 +24,9 @@ All copy lives in `src/content/`:
 - `projects.ts`: the project cards
 - `links.ts`: every project URL in one place
 
-### Adding Competitor Review Radar's live URL
+### Changing a project link
 
-Set `reviewRadarLive` in `src/content/links.ts`:
-
-```ts
-reviewRadarLive: "https://your-deployment.vercel.app",
-```
-
-The card then shows a "Live site" button and its badge changes from Shipped to Live. Only `https://` links are rendered, and an empty string hides the button.
+Edit the value in `src/content/links.ts`. Only `https://` links are rendered, and an empty string hides the button. Competitor Review Radar's badge follows `reviewRadarLive`: Live when it's set, Shipped when it's empty.
 
 ### Adding a link or demo to any card
 
