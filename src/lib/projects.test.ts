@@ -9,7 +9,6 @@ const base: Project = {
   summary: "Summary.",
   highlights: ["One"],
   stack: ["Next.js"],
-  status: "live",
   links: {},
   screenshots: [],
 };

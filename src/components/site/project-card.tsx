@@ -6,37 +6,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { Magnetic } from "@/components/motion/magnetic";
 import { useMediaQuery, usePrefersReducedMotion } from "@/hooks/use-media-query";
-import { isHttpsUrl, projectActions, statusLabel, type Project } from "@/lib/projects";
+import { isHttpsUrl, projectActions, type Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { DemoDialog, GalleryDialog } from "./media-dialogs";
 
 export const STACK_QUERY = "(min-width: 64rem) and (min-height: 48rem)";
-
-const statusStyles: Record<Project["status"], string> = {
-  live: "border-emerald-400/30 bg-emerald-400/10 text-emerald-200",
-  shipped: "border-violet-300/30 bg-violet-400/10 text-violet-100",
-  building: "border-amber-300/30 bg-amber-300/10 text-amber-100",
-  internal: "border-white/15 bg-white/[0.06] text-white/80",
-};
-
-function StatusBadge({ status }: { status: Project["status"] }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[10px] font-medium tracking-[0.16em] uppercase",
-        statusStyles[status],
-      )}
-    >
-      <span className="relative flex size-1.5">
-        {status === "building" || status === "live" ? (
-          <span className="ping-soft absolute inline-flex size-full rounded-full bg-current" />
-        ) : null}
-        <span className="relative inline-flex size-1.5 rounded-full bg-current" />
-      </span>
-      {statusLabel[status]}
-    </span>
-  );
-}
 
 function ProjectGlyph({ project }: { project: Project }) {
   if (project.icon) {
@@ -67,7 +41,7 @@ function ProjectGlyph({ project }: { project: Project }) {
 
 function frameLabel(project: Project) {
   if (isHttpsUrl(project.links.live)) return new URL(project.links.live).host;
-  return project.status === "internal" ? "internal dashboard" : "demo recording";
+  return project.frameLabel ?? "demo recording";
 }
 
 function Media({ project }: { project: Project }) {
@@ -273,14 +247,11 @@ export function ProjectCard({
         />
         <div className="relative grid h-full gap-8 p-5 sm:p-7 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col lg:col-span-5">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <ProjectGlyph project={project} />
-                <span className="font-mono text-xs text-subtle">
-                  {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-                </span>
-              </div>
-              <StatusBadge status={project.status} />
+            <div className="flex items-center gap-3">
+              <ProjectGlyph project={project} />
+              <span className="font-mono text-xs text-subtle">
+                {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+              </span>
             </div>
 
             <p className="mt-6 font-mono text-[11px] tracking-[0.2em] text-violet-300 uppercase">{project.kicker}</p>

@@ -102,10 +102,6 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  .text-outline {
-    color: transparent;
-    -webkit-text-stroke: 1px rgb(244 241 250 / 0.35);
-  }
   .text-gradient {
     background: linear-gradient(180deg, #ffffff 10%, #c4b5fd 60%, #8b5cf6 100%);
     -webkit-background-clip: text;

@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { socialIcon } from "@/components/icons";
 import { Magnetic } from "@/components/motion/magnetic";
 import { profile } from "@/content/profile";
+import { externalLinkProps } from "@/lib/external-link";
 import { cn } from "@/lib/utils";
 import { RotatingWords } from "./rotating-words";
 
@@ -145,9 +146,8 @@ export function Hero() {
                   <Magnetic key={social.href}>
                     <a
                       href={social.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`${social.label}: ${social.handle}`}
+                      {...externalLinkProps(social.href)}
+                      aria-label={social.ariaLabel}
                       className="grid size-12 place-items-center rounded-full border border-white/15 bg-white/[0.04] backdrop-blur transition-colors duration-300 hover:border-violet-400 hover:bg-violet-500/20"
                     >
                       <Icon className="size-4" />

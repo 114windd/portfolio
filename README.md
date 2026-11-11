@@ -19,14 +19,15 @@ pnpm build
 
 All copy lives in `src/content/`:
 
-- `profile.ts`: intro, about, stats, skills and socials
+- `profile.ts`: intro, about, stats and socials
 - `experience.ts`: roles and dates
 - `projects.ts`: the project cards
 - `links.ts`: every project URL in one place
+- `navigation.ts`: the nav links, in page order
 
 ### Changing a project link
 
-Edit the value in `src/content/links.ts`. Only `https://` links are rendered, and an empty string hides the button. Competitor Review Radar's badge follows `reviewRadarLive`: Live when it's set, Shipped when it's empty.
+Edit the value in `src/content/links.ts`. Only `https://` links are rendered, and an empty string hides the button.
 
 ### Adding a link or demo to any card
 

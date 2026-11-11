@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { socialIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { profile } from "@/content/profile";
+import { externalLinkProps } from "@/lib/external-link";
 import { usePrefersReducedMotion } from "@/hooks/use-media-query";
 
 function Word({ children, progress, range }: { children: string; progress: MotionValue<number>; range: [number, number] }) {
@@ -54,9 +55,8 @@ export function About() {
                       <a
                         key={social.href}
                         href={social.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={social.label}
+                        {...externalLinkProps(social.href)}
+                        aria-label={social.ariaLabel}
                         className="grid size-9 place-items-center rounded-full border border-white/10 transition-colors hover:border-violet-400 hover:bg-violet-500/20"
                       >
                         <Icon className="size-3.5" />

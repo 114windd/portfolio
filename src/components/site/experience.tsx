@@ -37,13 +37,6 @@ function RoleCard({ role, index }: { role: Role; index: number }) {
             </li>
           ))}
         </ul>
-        <ul className="mt-5 flex flex-wrap gap-2" aria-label="Tools">
-          {role.tags.map((tag) => (
-            <li key={tag} className="rounded-full border border-white/10 px-2.5 py-1 font-mono text-[11px] text-white/70">
-              {tag}
-            </li>
-          ))}
-        </ul>
       </article>
     </Reveal>
   );

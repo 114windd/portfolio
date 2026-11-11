@@ -1,3 +1,5 @@
+import { Mail } from "lucide-react";
+
 type IconProps = React.SVGProps<SVGSVGElement>;
 
 export function LinkedInIcon(props: IconProps) {
@@ -17,5 +19,7 @@ export function XIcon(props: IconProps) {
 }
 
 export function socialIcon(label: string) {
-  return label === "LinkedIn" ? LinkedInIcon : XIcon;
+  if (label === "LinkedIn") return LinkedInIcon;
+  if (label === "Email") return Mail;
+  return XIcon;
 }

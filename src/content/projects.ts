@@ -15,7 +15,6 @@ export const projects: Project[] = [
       "Live data with zero API keys and free tiers only, plus a shortlist → contacted → replied pipeline with CSV export.",
     ],
     stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "shadcn/ui", "Groq", "Vitest"],
-    status: "live",
     links: { live: PROJECT_URLS.creatorScoutLive, code: PROJECT_URLS.creatorScoutCode },
     demo: {
       src: "/videos/creator-scout-demo.mp4",
@@ -42,7 +41,6 @@ export const projects: Project[] = [
       "A Discord or Slack digest every morning via GitHub Actions or Vercel cron. Every feature works with no API keys.",
     ],
     stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "shadcn/ui", "SQLite", "Recharts"],
-    status: PROJECT_URLS.reviewRadarLive ? "live" : "shipped",
     links: { live: PROJECT_URLS.reviewRadarLive, code: PROJECT_URLS.reviewRadarCode },
     demo: {
       src: "/videos/review-radar-demo.mp4",
@@ -69,7 +67,6 @@ export const projects: Project[] = [
       "A recorded Trust Wallet run: 400 answers to 100 questions, 3,744 cited sources and 56 brands found.",
     ],
     stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Motion", "Upstash Redis", "OpenRouter"],
-    status: "shipped",
     links: { live: PROJECT_URLS.kiokuLive, code: PROJECT_URLS.kiokuCode },
     demo: {
       src: "/videos/kioku-demo.mp4",
@@ -86,7 +83,7 @@ export const projects: Project[] = [
   {
     slug: "saff",
     name: "Saff",
-    kicker: "Community app · Mosques",
+    kicker: "Community app · Building now",
     tagline: "One khutbah. Every heart. Prayer times, the Friday khutbah in your language and your mosque's news in one app.",
     summary:
       "A web app, installable on phones, for a mosque and its community. Members get prayer times, the khutbah with audio, transcript, summary, chapters and translations, plus notices and giving, without an account. Mosque staff sign in to publish.",
@@ -96,7 +93,6 @@ export const projects: Project[] = [
       "Now building live khutbah captions: audio is cut at the imam's pauses, transcribed and translated, then broadcast to a mosque screen and phones.",
     ],
     stack: ["Next.js", "React 19", "TypeScript", "Tailwind CSS v4", "Drizzle", "Cloudflare Workers AI", "Web Push"],
-    status: "building",
     icon: { src: "/images/projects/saff/icon.webp", alt: "Saff logo" },
     links: { live: PROJECT_URLS.saffLive },
     codePrivate: "Code isn't public yet",
@@ -125,8 +121,8 @@ export const projects: Project[] = [
       "Checks new launchpad mechanisms against official sources and on-chain use, and compares X narratives with actual trading. 339 tests.",
     ],
     stack: ["Python 3.12", "PostgreSQL 17", "Dune SQL", "X API", "OpenRouter", "Docker Compose", "GitHub Actions"],
-    status: "internal",
     links: {},
+    frameLabel: "internal dashboard",
     codePrivate: "Internal BNB Chain work: the code and live dashboard stay private",
     demo: {
       src: "/videos/meme-market-monitor-demo.mp4",

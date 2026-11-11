@@ -4,15 +4,10 @@ import { AnimatePresence, m, useMotionValueEvent, useScroll, useSpring } from "m
 import { useEffect, useState } from "react";
 import { socialIcon } from "@/components/icons";
 import { Magnetic } from "@/components/motion/magnetic";
+import { navLinks } from "@/content/navigation";
 import { profile } from "@/content/profile";
+import { externalLinkProps } from "@/lib/external-link";
 import { cn } from "@/lib/utils";
-
-const links = [
-  { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
-];
 
 export function Nav() {
   const { scrollY, scrollYProgress } = useScroll();
@@ -69,7 +64,7 @@ export function Nav() {
           </a>
 
           <ul className="hidden items-center gap-1 md:flex">
-            {links.map((link) => (
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -133,7 +128,7 @@ export function Nav() {
             transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
           >
             <ul className="space-y-2">
-              {links.map((link, i) => (
+              {navLinks.map((link, i) => (
                 <li key={link.href} className="overflow-hidden">
                   <m.a
                     href={link.href}
@@ -156,8 +151,7 @@ export function Nav() {
                   <a
                     key={social.href}
                     href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
+                    {...externalLinkProps(social.href)}
                     className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-sm"
                   >
                     <Icon className="size-4" />

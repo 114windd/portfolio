@@ -1,5 +1,3 @@
-export type ProjectStatus = "live" | "shipped" | "building" | "internal";
-
 export interface ProjectImage {
   src: string;
   alt: string;
@@ -22,9 +20,10 @@ export interface Project {
   summary: string;
   highlights: string[];
   stack: string[];
-  status: ProjectStatus;
   icon?: { src: string; alt: string };
   links: { live?: string; code?: string };
+  /** Shown in the preview frame's address bar when there's no live site to name. */
+  frameLabel?: string;
   /** Set when the code can't be shared; the card says why instead of linking it. */
   codePrivate?: string;
   demo?: ProjectDemo;
@@ -69,10 +68,3 @@ export function missingPieces(project: Project): string[] {
   if (project.screenshots.length === 0) missing.push("Screenshots");
   return missing;
 }
-
-export const statusLabel: Record<ProjectStatus, string> = {
-  live: "Live",
-  shipped: "Shipped",
-  building: "Building",
-  internal: "Internal",
-};

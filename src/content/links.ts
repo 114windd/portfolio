@@ -11,3 +11,5 @@ export const PROJECT_URLS: Record<string, string> = {
   kiokuCode: "https://github.com/koredeBNB/kikou",
   saffLive: "https://saff-khutbah.vercel.app",
 };
+
+export const CONTACT_EMAIL = "koredeodubanjo1@gmail.com";

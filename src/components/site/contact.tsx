@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { socialIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { profile } from "@/content/profile";
+import { externalLinkProps } from "@/lib/external-link";
 
 function Lift({ text }: { text: string }) {
   return (
@@ -37,8 +38,7 @@ export function Contact() {
         <div className="mt-12 grid gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
             <p className="max-w-md text-base leading-relaxed text-white/75 sm:text-lg">
-              I&apos;m looking for growth internships at consumer and crypto apps. Message me on LinkedIn or X and I&apos;ll
-              get back to you.
+              {profile.contactNote}
             </p>
           </Reveal>
           <div className="lg:col-span-7">
@@ -50,8 +50,7 @@ export function Contact() {
                     <Reveal delay={i * 0.08} y={16}>
                       <a
                         href={social.href}
-                        target="_blank"
-                        rel="noreferrer"
+                        {...externalLinkProps(social.href)}
                         data-cursor="Open"
                         className="group relative flex items-center justify-between gap-4 overflow-hidden px-2 py-6 sm:py-8"
                       >
@@ -79,9 +78,23 @@ export function Contact() {
         </div>
 
         <footer className="mt-28 flex flex-col-reverse items-start justify-between gap-6 border-t border-white/10 pt-8 text-sm text-subtle sm:flex-row sm:items-center">
-          <p>
-            {profile.name} · Built with Next.js, Tailwind CSS, shadcn/ui, Motion and Lenis.
-          </p>
+          <ul className="flex gap-2" aria-label="Social links">
+            {profile.socials.map((social) => {
+              const Icon = socialIcon(social.label);
+              return (
+                <li key={social.href}>
+                  <a
+                    href={social.href}
+                    {...externalLinkProps(social.href)}
+                    aria-label={social.ariaLabel}
+                    className="grid size-9 place-items-center rounded-full border border-white/10 text-white/80 transition-colors hover:border-violet-400 hover:bg-violet-500/20 hover:text-white"
+                  >
+                    <Icon className="size-3.5" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
           <a href="#top" className="group inline-flex items-center gap-2 text-white/80 hover:text-white">
             <span className="roll">
               <span>Back to top</span>

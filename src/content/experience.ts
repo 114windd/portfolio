@@ -5,7 +5,6 @@ export interface Role {
   period: string;
   logo: { src: string; alt: string };
   bullets: string[];
-  tags: string[];
 }
 
 export const experience: Role[] = [
@@ -19,7 +18,6 @@ export const experience: Role[] = [
       "Built a research workflow from topic to cited technical brief, combining source matrices, deterministic citation validation, Mermaid architecture diagrams and human approval gates.",
       "Automated documentation from repository monitoring to validated MkDocs pull requests with a production FastAPI GitHub App that coordinates OpenRouter/DeepSeek review, syncs llms.txt files and runs in Docker with GitHub Container Registry.",
     ],
-    tags: ["FastAPI", "Dune", "DefiLlama", "GeckoTerminal", "Docker"],
   },
   {
     company: "Pudgy Penguins",
@@ -31,7 +29,6 @@ export const experience: Role[] = [
       "Delivered five core trading capabilities across three networks: automated buy/sell, copy trading, Jupiter Trigger limit orders, real-time positions and PNL, and cross-chain wallet management.",
       "Improved fault tolerance and transaction visibility with circuit breakers, progressive timeouts with exponential backoff and RabbitMQ-backed WebSocket monitoring.",
     ],
-    tags: ["Python", "Web3.py", "Solana SDK", "RabbitMQ", "Redis"],
   },
   {
     company: "FryingPan",
@@ -43,7 +40,6 @@ export const experience: Role[] = [
       "During a six-month growth campaign, doubled the creators' combined Instagram and TikTok following, adding 44K+ followers and generating 80M+ views; the top video reached 20.2M views.",
       "Researched high-performing competitor formats, picked moments from long-form VODs, edited for hooks and retention, published consistently and scaled what worked, lifting the streamer's average viewers by 105% and max concurrent viewers 10x.",
     ],
-    tags: ["Short-form", "Hooks & retention", "Instagram", "TikTok", "Twitch"],
   },
 ];
 
