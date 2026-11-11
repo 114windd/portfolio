@@ -13,3 +13,9 @@ export const PROJECT_URLS: Record<string, string> = {
 };
 
 export const CONTACT_EMAIL = "koredeodubanjo1@gmail.com";
+
+/** The site's own address, used for metadata and link previews. */
+export const SITE_URL = "https://korede-odubanjo.vercel.app";
+
+/** The first production domain. Links to it were already shared, so it redirects to `SITE_URL`. */
+export const LEGACY_SITE_HOST = "portfolio-red-iota-81.vercel.app";

@@ -3,6 +3,7 @@ import { Caveat, Fraunces, Nunito } from "next/font/google";
 import { MotionProvider } from "@/components/providers/motion-provider";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { SceneDefs } from "@/components/scene/scene-defs";
+import { SITE_URL } from "@/content/links";
 import { profile } from "@/content/profile";
 import { cn } from "@/lib/utils";
 import "lenis/dist/lenis.css";
@@ -21,14 +22,17 @@ const description =
   "Korede Odubanjo: software engineer at BNB Chain, previously Pudgy Penguins, who also grows audiences (80M+ views from one short-form campaign). GTM tools, crypto systems and growth work.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: `${profile.name} · Software engineer & growth`,
   description,
   applicationName: profile.name,
   authors: [{ name: profile.name, url: "https://x.com/kxrede_" }],
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${profile.name} · Software engineer & growth`,
     description,
     type: "website",
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",

@@ -51,4 +51,6 @@ scripts/prepare-media.sh <source-media-dir> [avatar-dir]
 
 ## Deploying
 
-The site deploys on Vercel from `main`. Commits must be authored by Korede's GitHub identity, or Vercel blocks the deploy.
+The site deploys on Vercel from `main` to https://korede-odubanjo.vercel.app. Commits must be authored by Korede's GitHub identity, or Vercel blocks the deploy.
+
+The address is `SITE_URL` in `src/content/links.ts`, and metadata, the canonical link and link previews are built from it. The first domain, portfolio-red-iota-81.vercel.app, still points at the project, and `next.config.ts` permanently redirects it to the same path on the new address.
